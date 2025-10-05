@@ -1,0 +1,17 @@
+# Archivos de compilación
+target/
+bin/
+build/
+
+# Archivos temporales
+*.tmp
+*.log
+*.bak
+
+# Configuración de IDE
+.settings/
+.classpath
+.project
+
+# Otros archivos generados automáticamente
+*.iml
