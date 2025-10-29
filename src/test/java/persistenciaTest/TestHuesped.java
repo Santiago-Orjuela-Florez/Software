@@ -3,7 +3,7 @@ package persistenciaTest;
 import models.Huesped;
 import persistencia.PersistenceManager;
 
-public class TestHuesped {
+public class    TestHuesped {
 
     public static void main(String[] args) {
         PersistenceManager manager = new PersistenceManager();
