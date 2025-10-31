@@ -23,7 +23,8 @@ pipeline {
 			}
 			post {
 				always {
-					junit 'target/surefire-reports/*.xml'
+					// Ruta corregida para encontrar los resultados de pruebas
+					junit 'src/target/surefire-reports/*.xml'
 				}
 			}
 		}
@@ -35,7 +36,7 @@ pipeline {
 			post {
 				always {
 					publishHTML(target: [
-						reportDir: 'target/site/jacoco',
+						reportDir: 'src/target/site/jacoco',
 						reportFiles: 'index.html',
 						reportName: 'JaCoCo Coverage'
 					])
@@ -58,7 +59,7 @@ pipeline {
 			post {
 				always {
 					publishHTML(target: [
-						reportDir: 'target',
+						reportDir: 'src/target',
 						reportFiles: 'dependency-check-report.html',
 						reportName: 'OWASP Dependency Check'
 					])
@@ -77,7 +78,7 @@ pipeline {
 
 	post {
 		always {
-			archiveArtifacts artifacts: 'target/**/*.jar', fingerprint: true
+			archiveArtifacts artifacts: 'src/target/**/*.jar', fingerprint: true
 		}
 	}
 }
