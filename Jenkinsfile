@@ -19,7 +19,9 @@ node {
 
 	stage('Static Analysis - SonarQube') {
 		withSonarQubeEnv('SonarQubeServer') {
-			bat "mvn sonar:sonar -Dsonar.login=${credentials('sonar-token')}"
+			withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+				bat "mvn sonar:sonar -Dsonar.login=%SONAR_TOKEN%"
+			}
 		}
 	}
 
