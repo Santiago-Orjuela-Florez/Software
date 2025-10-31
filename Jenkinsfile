@@ -46,8 +46,10 @@ pipeline {
 
 		stage('Static Analysis - SonarQube') {
 			steps {
-				withSonarQubeEnv('SonarQubeServer') {
-					bat "mvn sonar:sonar -Dsonar.login=${SONARQUBE}"
+				script {
+					withSonarQubeEnv('SonarQubeServer') {
+						bat "mvn sonar:sonar -Dsonar.login=${SONARQUBE}"
+					}
 				}
 			}
 		}
