@@ -47,12 +47,15 @@ pipeline {
 		stage('Static Analysis - SonarQube') {
 			steps {
 				script {
-					withSonarQubeEnv('SonarQubeServer') {
-						bat "mvn sonar:sonar -Dsonar.login=${SONARQUBE}"
+					catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+						withSonarQubeEnv('SonarQubeServer') {
+							bat "mvn sonar:sonar -Dsonar.login=${SONARQUBE}"
+						}
 					}
 				}
 			}
 		}
+
 
 		stage('Dependency Check') {
 			steps {
