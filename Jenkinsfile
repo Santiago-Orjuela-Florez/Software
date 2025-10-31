@@ -47,7 +47,7 @@ pipeline {
 		stage('Static Analysis - SonarQube') {
 			steps {
 				script {
-					catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+					node {
 						withSonarQubeEnv('SonarQubeServer') {
 							bat "mvn sonar:sonar -Dsonar.login=${SONARQUBE}"
 						}
