@@ -2,12 +2,12 @@ pipeline {
 	agent any
 
 	tools {
-		maven 'Maven3'   // Nombre configurado en Jenkins
-		jdk 'JDK17'      // Nombre configurado en Jenkins
+		maven 'Maven3'
+		jdk 'JDK17'
 	}
 
 	environment {
-		SONARQUBE = credentials('sonar-token') // ID de la credencial en Jenkins
+		SONARQUBE = credentials('sonar-token')
 	}
 
 	stages {
@@ -23,8 +23,8 @@ pipeline {
 			}
 			post {
 				always {
-					// Ruta corregida para encontrar los resultados de pruebas
-					junit 'src/target/surefire-reports/*.xml'
+					// Ruta exacta confirmada por ti
+					junit 'target/surefire-reports/*.xml'
 				}
 			}
 		}
@@ -36,7 +36,7 @@ pipeline {
 			post {
 				always {
 					publishHTML(target: [
-						reportDir: 'src/target/site/jacoco',
+						reportDir: 'target/site/jacoco',
 						reportFiles: 'index.html',
 						reportName: 'JaCoCo Coverage'
 					])
@@ -59,7 +59,7 @@ pipeline {
 			post {
 				always {
 					publishHTML(target: [
-						reportDir: 'src/target',
+						reportDir: 'target',
 						reportFiles: 'dependency-check-report.html',
 						reportName: 'OWASP Dependency Check'
 					])
@@ -78,7 +78,7 @@ pipeline {
 
 	post {
 		always {
-			archiveArtifacts artifacts: 'src/target/**/*.jar', fingerprint: true
+			archiveArtifacts artifacts: 'target/**/*.jar', fingerprint: true
 		}
 	}
 }
