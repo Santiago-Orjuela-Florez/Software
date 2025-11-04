@@ -7,21 +7,23 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Properties;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class Login extends JFrame {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private static final Font FONT_ROBOTO_18 = new Font("Roboto", Font.PLAIN, 18);
 
-    private JPanel contentPane;
-    private JTextField txtUsuario;
-    private JPasswordField txtContrasena;
+    private final JTextField txtUsuario;
+    private final JPasswordField txtContrasena;
     private int xMouse;
     private int yMouse;
-    private JLabel labelExit;
+    private final JLabel labelExit;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
@@ -39,7 +41,7 @@ public class Login extends JFrame {
         setUndecorated(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 788, 527);
-        contentPane = new JPanel();
+        JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
@@ -62,7 +64,7 @@ public class Login extends JFrame {
         JLabel imgHotel = new JLabel("");
         imgHotel.setBounds(0, 0, 304, 538);
         Panel_1.add(imgHotel);
-        imgHotel.setIcon(new ImageIcon(Login.class.getResource("/imagenes/img-hotel-login-.png")));
+        imgHotel.setIcon(new ImageIcon(Objects.requireNonNull(Login.class.getResource("/imagenes/img-hotel-login-.png"))));
 
         // Botón salir
         JPanel btnExit = new JPanel();
@@ -181,6 +183,11 @@ public class Login extends JFrame {
         btnLogin.add(lblEntrar);
 
         // Header para mover ventana
+        JPanel header = getJPanel();
+        panel.add(header);
+    }
+
+    private JPanel getJPanel() {
         JPanel header = new JPanel();
         header.setBackground(SystemColor.window);
         header.setBounds(0, 0, 784, 36);
@@ -200,7 +207,7 @@ public class Login extends JFrame {
                 setLocation(x - xMouse, y - yMouse);
             }
         });
-        panel.add(header);
+        return header;
     }
 
     // Manejo de placeholders
