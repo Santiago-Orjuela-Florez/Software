@@ -11,6 +11,8 @@ import java.io.Serial;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Properties;
+
+import org.jetbrains.annotations.NotNull;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class Login extends JFrame {
@@ -183,11 +185,11 @@ public class Login extends JFrame {
         btnLogin.add(lblEntrar);
 
         // Header para mover ventana
-        JPanel header = getJPanel();
+        JPanel header = getPanel();
         panel.add(header);
     }
 
-    private JPanel getJPanel() {
+    private @NotNull JPanel getPanel() {
         JPanel header = new JPanel();
         header.setBackground(SystemColor.window);
         header.setBounds(0, 0, 784, 36);
