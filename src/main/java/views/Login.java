@@ -1,8 +1,5 @@
 package views;
 
-import java.awt.EventQueue;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileInputStream;
@@ -11,6 +8,8 @@ import java.io.Serial;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Properties;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import org.jetbrains.annotations.NotNull;
 import org.mindrot.jbcrypt.BCrypt;
@@ -19,7 +18,15 @@ public class Login extends JFrame {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    // Constantes
     private static final Font FONT_ROBOTO_18 = new Font("Roboto", Font.PLAIN, 18);
+    private static final Font FONT_ROBOTO_BLACK_20 = new Font("Roboto Black", Font.PLAIN, 20);
+    private static final Font FONT_ROBOTO_BLACK_26 = new Font("Roboto Black", Font.PLAIN, 26);
+    private static final Color COLOR_PANEL_LATERAL = new Color(12, 138, 199);
+    private static final Color COLOR_HOVER_BTN = new Color(0, 156, 223);
+    private static final Color COLOR_SEPARATOR_1 = SystemColor.textHighlight;
+    private static final Color COLOR_SEPARATOR_0 = new Color(0, 120, 215);
 
     private final JTextField txtUsuario;
     private final JPasswordField txtContrasena;
@@ -57,21 +64,32 @@ public class Login extends JFrame {
         panel.setLayout(null);
 
         // Panel lateral azul
-        JPanel Panel_1 = new JPanel();
-        Panel_1.setBackground(new Color(12, 138, 199));
-        Panel_1.setBounds(484, 0, 304, 527);
-        panel.add(Panel_1);
-        Panel_1.setLayout(null);
+        JPanel panelLateral = new JPanel();
+        panelLateral.setBackground(COLOR_PANEL_LATERAL);
+        panelLateral.setBounds(484, 0, 304, 527);
+        panelLateral.setLayout(null);
+        panel.add(panelLateral);
 
         JLabel imgHotel = new JLabel("");
         imgHotel.setBounds(0, 0, 304, 538);
-        Panel_1.add(imgHotel);
+        panelLateral.add(imgHotel);
         imgHotel.setIcon(new ImageIcon(Objects.requireNonNull(Login.class.getResource("/imagenes/img-hotel-login-.png"))));
 
         // Botón salir
         JPanel btnExit = new JPanel();
         btnExit.setBounds(251, 0, 53, 36);
-        Panel_1.add(btnExit);
+        panelLateral.add(btnExit);
+        btnExit.setBackground(COLOR_PANEL_LATERAL);
+        btnExit.setLayout(null);
+        btnExit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        labelExit = new JLabel("X");
+        labelExit.setBounds(0, 0, 53, 36);
+        labelExit.setForeground(SystemColor.text);
+        labelExit.setFont(FONT_ROBOTO_18);
+        labelExit.setHorizontalAlignment(SwingConstants.CENTER);
+        btnExit.add(labelExit);
+
         btnExit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) { System.exit(0); }
@@ -82,78 +100,28 @@ public class Login extends JFrame {
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                btnExit.setBackground(new Color(12, 138, 199));
+                btnExit.setBackground(COLOR_PANEL_LATERAL);
                 labelExit.setForeground(Color.white);
             }
         });
-        btnExit.setBackground(new Color(12, 138, 199));
-        btnExit.setLayout(null);
-        btnExit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        labelExit = new JLabel("X");
-        labelExit.setBounds(0, 0, 53, 36);
-        btnExit.add(labelExit);
-        labelExit.setForeground(SystemColor.text);
-        labelExit.setFont(FONT_ROBOTO_18);
-        labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Campos de texto
-        txtUsuario = new JTextField("");
-        txtUsuario.setForeground(Color.GRAY);
-        txtUsuario.setFont(FONT_ROBOTO_18);
-        txtUsuario.setBorder(BorderFactory.createEmptyBorder());
-        txtUsuario.setBounds(65, 256, 324, 32);
-        panel.add(txtUsuario);
-        txtUsuario.setColumns(10);
-        txtUsuario.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                handleUsernamePlaceholder();
-            }
-        });
-
-        txtContrasena = new JPasswordField("");
-        txtContrasena.setForeground(Color.GRAY);
-        txtContrasena.setFont(new Font("Roboto", Font.PLAIN, 16));
-        txtContrasena.setBorder(BorderFactory.createEmptyBorder());
-        txtContrasena.setBounds(65, 353, 324, 32);
-        panel.add(txtContrasena);
-        txtContrasena.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                handlePasswordPlaceholder();
-            }
-        });
+        txtUsuario = createTextField(panel);
+        txtContrasena = createPasswordField(panel);
 
         // Separadores
-        JSeparator separator = new JSeparator();
-        separator.setBackground(new Color(0, 120, 215));
-        separator.setBounds(65, 292, 324, 2);
-        panel.add(separator);
-
-        JSeparator separator_1 = new JSeparator();
-        separator_1.setBackground(SystemColor.textHighlight);
-        separator_1.setBounds(65, 393, 324, 2);
-        panel.add(separator_1);
+        panel.add(createSeparator(COLOR_SEPARATOR_0, 292));
+        panel.add(createSeparator(COLOR_SEPARATOR_1, 393));
 
         // Labels
         JLabel labelTitulo = new JLabel("INICIAR SESIÓN");
         labelTitulo.setForeground(SystemColor.textHighlight);
-        labelTitulo.setFont(new Font("Roboto Black", Font.PLAIN, 26));
+        labelTitulo.setFont(FONT_ROBOTO_BLACK_26);
         labelTitulo.setBounds(65, 149, 202, 26);
         panel.add(labelTitulo);
 
-        JLabel labelUsuario = new JLabel("USUARIO");
-        labelUsuario.setForeground(SystemColor.textInactiveText);
-        labelUsuario.setFont(new Font("Roboto Black", Font.PLAIN, 20));
-        labelUsuario.setBounds(65, 219, 107, 26);
-        panel.add(labelUsuario);
-
-        JLabel labelContrasena = new JLabel("CONTRASEÑA");
-        labelContrasena.setForeground(SystemColor.textInactiveText);
-        labelContrasena.setFont(new Font("Roboto Black", Font.PLAIN, 20));
-        labelContrasena.setBounds(65, 316, 140, 26);
-        panel.add(labelContrasena);
+        panel.add(createLabel("USUARIO", 219, 107));
+        panel.add(createLabel("CONTRASEÑA", 316, 140));
 
         // Botón login
         JPanel btnLogin = new JPanel();
@@ -161,35 +129,73 @@ public class Login extends JFrame {
         btnLogin.setBounds(65, 431, 122, 44);
         btnLogin.setLayout(null);
         btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnLogin.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                performLogin();
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnLogin.setBackground(new Color(0, 156, 223));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnLogin.setBackground(SystemColor.textHighlight);
-            }
-        });
         panel.add(btnLogin);
 
-        JLabel lblEntrar = new JLabel("ENTRAR");
-        lblEntrar.setBounds(0, 0, 122, 44);
-        lblEntrar.setForeground(SystemColor.controlLtHighlight);
-        lblEntrar.setHorizontalAlignment(SwingConstants.CENTER);
-        lblEntrar.setFont(new Font("Roboto", Font.PLAIN, 18));
-        btnLogin.add(lblEntrar);
+        JLabel labelEntrar = new JLabel("ENTRAR");
+        labelEntrar.setBounds(0, 0, 122, 44);
+        labelEntrar.setForeground(SystemColor.controlLtHighlight);
+        labelEntrar.setHorizontalAlignment(SwingConstants.CENTER);
+        labelEntrar.setFont(FONT_ROBOTO_18);
+        btnLogin.add(labelEntrar);
+
+        btnLogin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) { performLogin(); }
+            @Override
+            public void mouseEntered(MouseEvent e) { btnLogin.setBackground(COLOR_HOVER_BTN); }
+            @Override
+            public void mouseExited(MouseEvent e) { btnLogin.setBackground(SystemColor.textHighlight); }
+        });
 
         // Header para mover ventana
-        JPanel header = getPanel();
-        panel.add(header);
+        panel.add(createHeader());
     }
 
-    private @NotNull JPanel getPanel() {
+    // Métodos helper
+    private @NotNull JTextField createTextField(JPanel parent) {
+        JTextField field = new JTextField("Ingrese su nombre de usuario");
+        field.setForeground(Color.GRAY);
+        field.setFont(FONT_ROBOTO_18);
+        field.setBorder(BorderFactory.createEmptyBorder());
+        field.setBounds(65, 256, 324, 32);
+        parent.add(field);
+        field.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) { handleUsernamePlaceholder(); }
+        });
+        return field;
+    }
+
+    private @NotNull JPasswordField createPasswordField(JPanel parent) {
+        JPasswordField field = new JPasswordField("********");
+        field.setForeground(Color.GRAY);
+        field.setFont(FONT_ROBOTO_18);
+        field.setBorder(BorderFactory.createEmptyBorder());
+        field.setBounds(65, 353, 324, 32);
+        parent.add(field);
+        field.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) { handlePasswordPlaceholder(); }
+        });
+        return field;
+    }
+
+    private @NotNull JSeparator createSeparator(Color color, int y) {
+        JSeparator sep = new JSeparator();
+        sep.setBackground(color);
+        sep.setBounds(65, y, 324, 2);
+        return sep;
+    }
+
+    private @NotNull JLabel createLabel(String text, int y, int width) {
+        JLabel label = new JLabel(text);
+        label.setBounds(65, y, width, 26);
+        label.setFont(Login.FONT_ROBOTO_BLACK_20);
+        label.setForeground(SystemColor.textInactiveText);
+        return label;
+    }
+
+    private @NotNull JPanel createHeader() {
         JPanel header = new JPanel();
         header.setBackground(SystemColor.window);
         header.setBounds(0, 0, 784, 36);
@@ -204,15 +210,13 @@ public class Login extends JFrame {
         header.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                int x = e.getXOnScreen();
-                int y = e.getYOnScreen();
-                setLocation(x - xMouse, y - yMouse);
+                setLocation(e.getXOnScreen() - xMouse, e.getYOnScreen() - yMouse);
             }
         });
         return header;
     }
 
-    // Manejo de placeholders
+    // Placeholder handlers
     private void handleUsernamePlaceholder() {
         if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
             txtUsuario.setText("");
@@ -256,15 +260,16 @@ public class Login extends JFrame {
 
         String envUser = config.getProperty("app.user");
         String envPassHash = config.getProperty("app.pass.hash");
-
         char[] passwordChars = txtContrasena.getPassword();
+
         try {
             if (envUser == null || envPassHash == null) {
                 JOptionPane.showMessageDialog(this, "Credenciales no configuradas.");
                 return;
             }
 
-            if (txtUsuario.getText().equals(envUser) && BCrypt.checkpw(new String(passwordChars), envPassHash)) {
+            if (txtUsuario.getText().equals(envUser) &&
+                    BCrypt.checkpw(new String(passwordChars), envPassHash)) {
                 MenuUsuario menu = new MenuUsuario();
                 menu.setVisible(true);
                 dispose();
