@@ -153,7 +153,7 @@ public class Login extends JFrame {
 
     // Métodos helper
     private @NotNull JTextField createTextField(JPanel parent) {
-        JTextField field = new JTextField("Ingrese su nombre de usuario");
+        JTextField field = new JTextField("");
         field.setForeground(Color.GRAY);
         field.setFont(FONT_ROBOTO_18);
         field.setBorder(BorderFactory.createEmptyBorder());
@@ -167,7 +167,7 @@ public class Login extends JFrame {
     }
 
     private @NotNull JPasswordField createPasswordField(JPanel parent) {
-        JPasswordField field = new JPasswordField("********");
+        JPasswordField field = new JPasswordField("");
         field.setForeground(Color.GRAY);
         field.setFont(FONT_ROBOTO_18);
         field.setBorder(BorderFactory.createEmptyBorder());
@@ -218,12 +218,12 @@ public class Login extends JFrame {
 
     // Placeholder handlers
     private void handleUsernamePlaceholder() {
-        if (txtUsuario.getText().equals("Ingrese su nombre de usuario")) {
+        if (txtUsuario.getText().equals("Ingrese su nombre")) {
             txtUsuario.setText("");
             txtUsuario.setForeground(Color.BLACK);
         }
         if (txtContrasena.getPassword().length == 0) {
-            txtContrasena.setText("********");
+            txtContrasena.setText("*******");
             txtContrasena.setForeground(Color.GRAY);
         }
     }
