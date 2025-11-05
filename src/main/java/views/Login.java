@@ -234,7 +234,7 @@ public class Login extends JFrame {
             txtContrasena.setForeground(Color.BLACK);
         }
         if (txtUsuario.getText().isEmpty()) {
-            txtUsuario.setText("Ingrese su nombre de usuario");
+            txtUsuario.setText("Ingrese su nombre de usuari");
             txtUsuario.setForeground(Color.GRAY);
         }
     }
